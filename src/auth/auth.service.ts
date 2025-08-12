@@ -17,10 +17,10 @@ export class AuthService {
 
     async signup(dto: AuthDto): Promise<(Omit<User, "password">) | null> {
         try {
-            // hash the password
+            //! hash the password
             const password = await argon2.hash(dto.password)
 
-            // save the new user
+            //! save the new user
             const user = await this.prisma.user.create({
                 data: {
                     email: dto.email,
@@ -69,6 +69,7 @@ export class AuthService {
                 throw new ForbiddenException("email doesn't exist")
             }
 
+            //! Check the password
             const passwordMatches = await argon2.verify(user.password, dto.password)
 
             if (!passwordMatches) {
