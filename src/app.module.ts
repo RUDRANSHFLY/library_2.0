@@ -5,10 +5,11 @@ import { AuthModule } from './auth/auth.module';
 import { DbService } from './db/db.service';
 import { DbModule } from './db/db.module';
 import { ConfigModule } from '@nestjs/config';
+import { BookModule } from './book/book.module';
 
 
 @Module({
-  imports: [AuthModule, DbModule,ConfigModule.forRoot({isGlobal : true})],
+  imports: [AuthModule, DbModule,ConfigModule.forRoot({isGlobal : true}), BookModule],
   controllers: [AppController],
   providers: [AppService, DbService],
 })
