@@ -6,7 +6,7 @@ export class GetBookDto{
     @ApiProperty({
         name : "page",
         description : "deafult page is 1",
-        example : "4"
+        example : "1"
     })
     @Type(() => Number)
     @IsNumber()
@@ -17,7 +17,7 @@ export class GetBookDto{
     @ApiProperty({
         name : 'limit',
         description : "an limit for reterval of books",
-        example : "15"
+        example : "10"
     })
     @Type(() => Number)
     @IsNumber()
