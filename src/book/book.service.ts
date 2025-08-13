@@ -1,15 +1,40 @@
-import { ConflictException, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookDto, GetBookDto } from './dto';
 import { Prisma } from '@prisma/client';
 import { DbService } from 'src/db/db.service';
 import { EditBookDto } from './dto/edit-book.dto';
+import Fuse from 'fuse.js';
 
 @Injectable()
 export class BookService {
     constructor(
         private readonly prisma: DbService
     ) { }
+    
+    async searchBook(query: string) {
+        if (!query.trim()) throw new BadRequestException('Query is required');
+        try {
+            // Fetch all books
+           const books = await this.prisma.book.findMany();
 
+
+           // fuse js options
+           const fuse = new Fuse(books,{
+            keys : ['title','author','genre'],
+            threshold : 0.4,
+            ignoreLocation : true,
+           })
+
+
+           const results = fuse.search(query)
+
+           // filter out books based on query search
+           return results.map(result => result.item);
+        } catch (error) {
+            console.log(error);
+            throw error
+        }
+    }
 
     async createBook(userId: string, dto: CreateBookDto) {
         try {
@@ -78,11 +103,17 @@ export class BookService {
 
     async getBookById(bookId: string) {
         try {
-            return this.prisma.book.findUnique({
+            const book = await this.prisma.book.findUnique({
                 where: {
                     id: bookId
                 }
             })
+
+            if(!book){
+                throw new NotFoundException('Book does not exist')
+            }
+
+            return book;
         } catch (error) {
             console.log(error);
             throw error;
@@ -140,4 +171,5 @@ export class BookService {
             throw error;
         }
     }
+
 }
