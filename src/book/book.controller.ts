@@ -9,9 +9,14 @@ import { CreateBookDto, EditBookDto, GetBookDto } from './dto';
 @UseGuards(AuthGuard)
 @Controller('book')
 export class BookController {
-
+    
     constructor(private readonly bookService : BookService){}
-
+    
+    @Get('search')
+    searchBook(@Query('q') q: string){
+        return this.bookService.searchBook(q)
+    }
+    
     @Post()
     createBook(
         @GetUser('sub') userId : string,
@@ -49,4 +54,5 @@ export class BookController {
     ){
         return this.bookService.deleteBookById(userId,bookId)
     }
+
 }
