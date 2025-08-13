@@ -31,7 +31,7 @@ export class CreateBookDto {
     genre!: string
 
     @ApiProperty({
-        name: "pubhlisedYear",
+        name: "publishedYear",
         description: "a published year of book when it pusblhised",
         example: "2014"
     })
@@ -45,7 +45,7 @@ export class CreateBookDto {
     @ApiProperty({
         name: "isbn",
         description: "a unique identifier for all publishied books",
-        example: "123456564"
+        example: "1236564"
     })
     @IsString()
     @IsNotEmpty()
@@ -53,7 +53,7 @@ export class CreateBookDto {
 
 
     @ApiProperty({
-        name: "stcokCount",
+        name: "stockCount",
         description: "a stock count of book in library",
         example: "5"
     })

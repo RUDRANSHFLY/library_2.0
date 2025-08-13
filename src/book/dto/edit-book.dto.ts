@@ -32,7 +32,7 @@ export class EditBookDto {
 
 
     @ApiProperty({
-        name: "pubhlisedYear",
+        name: "publishedYear",
         description: "a published year of book when it pusblhised",
         example: "2014"
     })
@@ -55,7 +55,7 @@ export class EditBookDto {
 
 
     @ApiProperty({
-        name: "stcokCount",
+        name: "stockCount",
         description: "a stock count of book in library",
         example: "5"
     })

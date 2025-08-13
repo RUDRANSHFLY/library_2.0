@@ -3,9 +3,11 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { BookService } from './book.service';
 import { GetUser } from 'src/auth/decorators';
 import { CreateBookDto, EditBookDto, GetBookDto } from './dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
 
+@ApiBearerAuth('JWT-auth')
 @UseGuards(AuthGuard)
 @Controller('book')
 export class BookController {
